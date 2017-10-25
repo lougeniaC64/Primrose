@@ -6,7 +6,7 @@ pliny.namespace({
   description: "A collection of tools to be able to manipulate objects."
 });
 
-import Teleporter from "./Teleporter";
+import Teleporter from "../Controls/Teleporter";
 
 export {
   Teleporter

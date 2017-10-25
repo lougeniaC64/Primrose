@@ -242,7 +242,7 @@ import NetworkManager from "./Network/Manager";
 
 import PlainText from "./Text/Grammars/PlainText";
 
-import Teleporter from "./Tools/Teleporter";
+import Teleporter from "./Controls/Teleporter";
 
 import { Quality, PIXEL_SCALES } from "./constants";
 
