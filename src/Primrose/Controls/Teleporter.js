@@ -3,6 +3,7 @@ import pliny from "pliny/pliny";
 import { Vector3 } from "three";
 
 import { sphere } from "../../live-api"
+import Entity from "./Entity";
 
 const DIFF = new Vector3(),
   MAX_MOVE_DISTANCE = 5,
@@ -11,48 +12,59 @@ const DIFF = new Vector3(),
   TELEPORT_PAD_RADIUS = 0.4,
   TELEPORT_COOLDOWN = 250;
 
-export default class Teleporter {
-  constructor(env) {
+export default class Teleporter extends Entity {
+  // constructor(env) {
+  //
+  //   this.enabled = true;
+  //   this._environment = env;
+  //
+  //   this._startPoint = new Vector3();
+  //   this._moveDistance = 0;
+  //
+  //   this._start = this._start.bind(this);
+  //   this._exit = this._exit.bind(this);
+  //   this._move = this._move.bind(this);
+  //   this._end = this._end.bind(this);
+  //
+  //   env.ground.on("exit", this._exit)
+  //     .on("gazecancel", this._exit)
+  //     .on("gazecomplete", this._exit)
+  //     .on("pointerend", this._exit)
+  //
+  //     .on("pointerstart", this._start)
+  //     .on("gazestart", this._start)
+  //
+  //     .on("pointermove", this._move)
+  //     .on("gazemove", this._move)
+  //
+  //     .on("select", this._end);
+  //
+  //
+  //   this.disk = sphere(TELEPORT_PAD_RADIUS, 128, 3)
+  //     .colored(0xff0000, {
+  //       unshaded: true
+  //     })
+  //     .named("disk")
+  //     .addTo(env.scene);
+  //
+  //   this.disk.geometry.computeBoundingBox();
+  //   this.disk.geometry.vertices.forEach((v) => {
+  //     v.y = 0.1 * (v.y - this.disk.geometry.boundingBox.min.y);
+  //   });
+  //   this.disk.geometry.computeBoundingBox();
+  //
+  //   this.disk.visible = false;
+  // }
 
-    this.enabled = true;
-    this._environment = env;
-
-    this._startPoint = new Vector3();
-    this._moveDistance = 0;
-
-    this._start = this._start.bind(this);
-    this._exit = this._exit.bind(this);
-    this._move = this._move.bind(this);
-    this._end = this._end.bind(this);
-
-    env.ground.on("exit", this._exit)
-      .on("gazecancel", this._exit)
-      .on("gazecomplete", this._exit)
-      .on("pointerend", this._exit)
-
-      .on("pointerstart", this._start)
-      .on("gazestart", this._start)
-
-      .on("pointermove", this._move)
-      .on("gazemove", this._move)
-
-      .on("select", this._end);
-
-
-    this.disk = sphere(TELEPORT_PAD_RADIUS, 128, 3)
-      .colored(0xff0000, {
-        unshaded: true
-      })
-      .named("disk")
-      .addTo(env.scene);
-
-    this.disk.geometry.computeBoundingBox();
-    this.disk.geometry.vertices.forEach((v) => {
-      v.y = 0.1 * (v.y - this.disk.geometry.boundingBox.min.y);
+  constructor(options) {
+    super("Teleporter", {
+      transparent: false, // was false
+      dim: options.drawDistance,
+      texture: options.groundTexture,
+      model: options.groundModel,
+      shadow: options.enableShadows,
+      progress: options.progress
     });
-    this.disk.geometry.computeBoundingBox();
-
-    this.disk.visible = false;
   }
 
   _exit(evt) {
